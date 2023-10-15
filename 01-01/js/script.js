@@ -1,5 +1,17 @@
 'use strict';
 
+function updateClicks() {
+  let clicks = {};
+  function reportClicks(item) {
+    clicks[item] = clicks[item] + 1 || 1;
+    console.log(item, clicks);
+  }
+  return reportClicks;
+}
+
+const reportActivities = updateClicks();
+const reportProducts = updateClicks();
+
 const activities = {
   teamIn: ['basketball', 'hockey', 'volleyball'],
   teamOutWarm: [
@@ -122,7 +134,17 @@ document.querySelectorAll('.options div').forEach(function (el) {
     'click',
     function (event) {
       updateActivityList(event);
-      updateClicks(event.target);
+      reportActivities(event.target.id);
+    },
+    false
+  );
+});
+
+document.querySelectorAll('.product-image').forEach(function (el) {
+  el.addEventListener(
+    'mouseenter',
+    function (event) {
+      reportProducts(event.target.nextElementSibling.textContent);
     },
     false
   );
